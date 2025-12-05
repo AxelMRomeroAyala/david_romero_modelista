@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Modelista de calzado | David Romero Ayala</title>
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card: #111827;
+      --accent: #f59e0b;
+      --muted: #cbd5e1;
+      --text: #e2e8f0;
+      --soft: rgba(255, 255, 255, 0.04);
+      --max-width: 1100px;
+      --shadow: 0 20px 60px rgba(0, 0, 0, 0.35);
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: "Inter", system-ui, -apple-system, sans-serif;
+      background: radial-gradient(circle at 10% 20%, rgba(245, 158, 11, 0.08), transparent 30%),
+        radial-gradient(circle at 90% 10%, rgba(59, 130, 246, 0.08), transparent 28%),
+        var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      backdrop-filter: blur(10px);
+      background: rgba(15, 23, 42, 0.9);
+      border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    nav {
+      max-width: var(--max-width);
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 22px;
+      gap: 16px;
+    }
+
+    nav .brand {
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+
+    nav .links {
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    nav a {
+      color: var(--text);
+      text-decoration: none;
+      font-weight: 600;
+      font-size: 0.95rem;
+      padding: 8px 12px;
+      border-radius: 999px;
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+
+    nav a:hover,
+    nav a:focus-visible {
+      background: rgba(255, 255, 255, 0.06);
+      color: #fff;
+    }
+
+    .hero {
+      max-width: var(--max-width);
+      margin: 30px auto 80px;
+      padding: 32px 22px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 28px;
+      align-items: center;
+    }
+
+    .hero-text h1 {
+      font-size: clamp(2.3rem, 4vw, 3rem);
+      margin: 0 0 12px;
+      letter-spacing: -0.5px;
+    }
+
+    .hero-text p {
+      color: var(--muted);
+      margin: 0 0 18px;
+      max-width: 580px;
+    }
+
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin: 16px 0;
+    }
+
+    .pill {
+      background: var(--soft);
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      color: var(--text);
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-weight: 600;
+      font-size: 0.95rem;
+    }
+
+    .cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: linear-gradient(120deg, #f59e0b, #f97316);
+      color: #0f172a;
+      padding: 12px 16px;
+      border-radius: 12px;
+      text-decoration: none;
+      font-weight: 800;
+      box-shadow: 0 12px 30px rgba(245, 158, 11, 0.35);
+      border: none;
+    }
+
+    .cta.secondary {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid rgba(255, 255, 255, 0.18);
+      box-shadow: none;
+    }
+
+    .cta + .cta {
+      margin-left: 8px;
+    }
+
+    .hero-media {
+      position: relative;
+      background: linear-gradient(140deg, rgba(245, 158, 11, 0.22), rgba(15, 23, 42, 0.9)),
+        url("https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=1200&q=80") center/cover;
+      border-radius: var(--radius);
+      min-height: 320px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+    }
+
+    .hero-badge {
+      position: absolute;
+      top: 18px;
+      left: 18px;
+      background: rgba(15, 23, 42, 0.85);
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      font-weight: 700;
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    section {
+      max-width: var(--max-width);
+      margin: 0 auto 80px;
+      padding: 0 22px;
+    }
+
+    section h2 {
+      font-size: 1.9rem;
+      margin: 0 0 14px;
+    }
+
+    section p.lead {
+      color: var(--muted);
+      margin-top: 0;
+      margin-bottom: 26px;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+    }
+
+    .card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+    }
+
+    .card h3 {
+      margin: 0 0 10px;
+      font-size: 1.2rem;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      counter-reset: step;
+    }
+
+    .step {
+      position: relative;
+      padding: 16px 16px 16px 48px;
+      background: var(--card);
+      border-radius: var(--radius);
+      border: 1px solid rgba(255, 255, 255, 0.06);
+    }
+
+    .step::before {
+      counter-increment: step;
+      content: counter(step);
+      position: absolute;
+      left: 16px;
+      top: 16px;
+      width: 24px;
+      height: 24px;
+      border-radius: 8px;
+      background: rgba(245, 158, 11, 0.16);
+      color: #f59e0b;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+
+    .gallery figure {
+      margin: 0;
+      position: relative;
+      border-radius: 14px;
+      overflow: hidden;
+      aspect-ratio: 4 / 3;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      background: linear-gradient(120deg, rgba(245, 158, 11, 0.18), rgba(15, 23, 42, 0.9));
+      display: grid;
+      place-items: center;
+      text-align: center;
+      padding: 18px;
+    }
+
+    .gallery figcaption {
+      font-weight: 700;
+      color: var(--text);
+      text-shadow: 0 3px 8px rgba(0, 0, 0, 0.5);
+    }
+
+    .testimonial {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+      box-shadow: var(--shadow);
+    }
+
+    .testimonial strong {
+      display: block;
+      margin-top: 10px;
+      color: #facc15;
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+
+    .contact-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      padding: 18px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .contact-card a {
+      color: #fbbf24;
+      font-weight: 700;
+      text-decoration: none;
+    }
+
+    .floating-whatsapp {
+      position: fixed;
+      bottom: 18px;
+      right: 18px;
+      background: #25d366;
+      color: #fff;
+      width: 60px;
+      height: 60px;
+      display: grid;
+      place-items: center;
+      border-radius: 50%;
+      box-shadow: 0 16px 32px rgba(37, 211, 102, 0.35);
+      text-decoration: none;
+      font-size: 28px;
+      z-index: 20;
+    }
+
+    footer {
+      max-width: var(--max-width);
+      margin: 0 auto 40px;
+      padding: 0 22px;
+      color: var(--muted);
+      text-align: center;
+    }
+
+    @media (max-width: 720px) {
+      nav {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+
+      .hero {
+        margin-top: 12px;
+      }
+
+      .hero-media {
+        min-height: 260px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <nav>
+      <div class="brand">David Romero Ayala · Modelista de calzado</div>
+      <div class="links">
+        <a href="#sobre">Sobre mí</a>
+        <a href="#servicios">Servicios</a>
+        <a href="#proceso">Proceso</a>
+        <a href="#trabajos">Trabajos</a>
+        <a href="#contacto">Contacto</a>
+      </div>
+      <a class="cta" href="https://wa.me/541140468897" target="_blank" rel="noopener">Contactar</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="inicio">
+      <div class="hero-text">
+        <h1>Modelista de calzado con más de <span style="color:#f59e0b;">40</span> años de experiencia</h1>
+        <p>Soy David Romero Ayala. Diseño, desarrollo y ajusto moldes y hormas para todo tipo de calzado con enfoque artesanal y precisión industrial.</p>
+        <div class="pills">
+          <span class="pill">Patrones y hormas a medida</span>
+          <span class="pill">Correcciones rápidas</span>
+          <span class="pill">Asesoría para talleres</span>
+          <span class="pill">Producción en Lanús · Valentín Alsina</span>
+        </div>
+        <div>
+          <a class="cta" href="https://wa.me/541140468897" target="_blank" rel="noopener">Escribir por WhatsApp</a>
+        </div>
+      </div>
+      <div class="hero-media" aria-label="Foto de trabajo en taller de calzado">
+        <div class="hero-badge">Imagen IA · Cambiar por foto real</div>
+      </div>
+    </section>
+
+    <section id="sobre">
+      <h2>Sobre mí</h2>
+      <p class="lead">Historia, años de experiencia, tipos de calzado y enfoque artesanal en patrones y hormas.</p>
+      <div class="cards">
+        <div class="card">
+          <h3>Trayectoria</h3>
+          <p>Empecé en un taller familiar y he acompañado a marcas locales e independientes en el desarrollo de colecciones.</p>
+        </div>
+        <div class="card">
+          <h3>Especialidades</h3>
+          <p>Todo tipo de calzado: vestir, deportivo, femenino, cápsulas y producciones completas.</p>
+        </div>
+        <div class="card">
+          <h3>Enfoque</h3>
+          <p>Trabajo preciso en patronaje, optimización de materiales y ajustes cómodos listos para producción.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="servicios">
+      <h2>Servicios</h2>
+      <p class="lead">Soluciones completas desde el boceto hasta el molde final listo para la línea de producción.</p>
+      <div class="cards">
+        <div class="card">
+          <h3>Desarrollo de modelos</h3>
+          <p>Transformo bocetos en moldes listos, considerando horma, suela y material.</p>
+        </div>
+        <div class="card">
+          <h3>Digitalización de moldes</h3>
+          <p>Vectorizado y limpieza de archivos para corte digital o CNC.</p>
+        </div>
+        <div class="card">
+          <h3>Ajustes y correcciones</h3>
+          <p>Corrección de talles, holguras y refuerzos según pruebas físicas.</p>
+        </div>
+        <div class="card">
+          <h3>Asesoría</h3>
+          <p>Acompaño a fábricas y talleres pequeños en procesos y escalados.</p>
+        </div>
+        <div class="card">
+          <h3>Gradación y escalado</h3>
+          <p>Escalado completo de talles con control de confort y compatibilidad de materiales.</p>
+        </div>
+        <div class="card">
+          <h3>Prototipado y ajustes finales</h3>
+          <p>Pruebas de producto terminado y ajustes finos listos para producción.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="proceso">
+      <h2>Proceso de trabajo</h2>
+      <p class="lead">Un flujo claro para llevar tu calzado del concepto al producto listo.</p>
+      <div class="steps">
+        <div class="step">
+          <h3>Reunión / consulta</h3>
+          <p>Definimos tipo de calzado, materiales y objetivo del modelo.</p>
+        </div>
+        <div class="step">
+          <h3>Diseño y molde</h3>
+          <p>Construyo el patrón y preparaciones necesarias según horma.</p>
+        </div>
+        <div class="step">
+          <h3>Prueba y ajustes</h3>
+          <p>Probamos el corte, corregimos holguras y líneas de diseño.</p>
+        </div>
+        <div class="step">
+          <h3>Entrega final</h3>
+          <p>Entrego archivos o moldes listos para producción.</p>
+        </div>
+      </div>
+    </section>
+
+    <section id="trabajos">
+      <h2>Trabajos realizados</h2>
+      <p class="lead">Ejemplos listos para reemplazar por tus fotos reales. Genera con IA mientras tanto.</p>
+      <div class="gallery">
+        <figure>
+          <figcaption>Oxford en cuero negro · producto terminado</figcaption>
+        </figure>
+        <figure>
+          <figcaption>Sneaker deportivo · paneles respirables</figcaption>
+        </figure>
+        <figure>
+          <figcaption>Botín femenino · ajuste al tobillo</figcaption>
+        </figure>
+        <figure>
+          <figcaption>Mocasín clásico · costura visible</figcaption>
+        </figure>
+        <figure>
+          <figcaption>Sandalia · pruebas de tiras y terminaciones</figcaption>
+        </figure>
+        <figure>
+          <figcaption>Patrón digital · suela vulcanizada</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section id="testimonios">
+      <h2>Testimonios</h2>
+      <div class="cards">
+        <div class="testimonial">
+          “Entregó los moldes listos y sin correcciones extra. Aceleramos la producción una semana.”
+          <strong>Fábrica local · Serie de vestir</strong>
+        </div>
+        <div class="testimonial">
+          “Nos ayudó a ajustar hormas femeninas con comodidad real, sin perder estética.”
+          <strong>Taller independiente · Colección cápsula</strong>
+        </div>
+      </div>
+    </section>
+
+    <section id="contacto">
+      <h2>Contacto</h2>
+      <p class="lead">Respondo por WhatsApp. Atiendo en Lanús, Valentín Alsina, Provincia de Buenos Aires.</p>
+      <div class="contact-grid">
+        <div class="contact-card">
+          <h3>WhatsApp</h3>
+          <p><a href="https://wa.me/541140468897" target="_blank" rel="noopener">+54 11 4046-8897</a></p>
+        </div>
+        <div class="contact-card">
+          <h3>Zona</h3>
+          <p>Lanús · Valentín Alsina · Provincia de Buenos Aires</p>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <a class="floating-whatsapp" href="https://wa.me/541140468897" target="_blank" rel="noopener" aria-label="Contactar por WhatsApp">✉</a>
+
+  <footer>
+    Portafolio de modelista de calzado · Actualiza con tus datos reales.
+  </footer>
+</body>
+</html>
